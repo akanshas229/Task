@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %} Search Student {% endblock %}
+{% block js %}
+<script>
+let previews = document.getElementsByClassName('preview');
+Array.from(previews).forEach((element)=>{
+    element.innerHTML = element.innerText;
+
+})
+</script>
+{% endblock %}
+
+
+
+{% block body %}
+<div class="container my-3">
+    <h2> Search results : </h2>
+    {% if allStudentName|length < 1 %}
+    Your search query - <b> {{query}} </b> - did not match any documents. <br>
+
+    Suggestions:
+    <ul>
+
+        <li>Make sure that all words are spelled correctly.</li>
+        <li>Try different keywords.</li>
+        <li>Try more general keywords.</li>
+        <li>Try fewer keywords.</li>
+    </ul>
+    {% endif %}
+    {% for Student in allStudentName  %}
+
+    <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Roll No.</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Class</th>
+                        <th scope="col">School</th>
+                        <th scope="col">Mobile</th>
+                        <th scope="col">Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{Student.Roll_no}}</td>
+                        <td>{{Student.Name}}</td>
+                        <td>{{Student.Class}}</td>
+                        <td>{{Student.School}}</td>
+                        <td>{{Student.Mobile}}</td>
+                        <td>{{Student.Address}}</td>
+                        {% if user.is_authenticated %}
+                        <td>
+                            <a href="{% url 'updatedata' Student.pk %}" class="btn btn-primary btn-sm">Update</a>
+                        </td>
+                        <td>
+                            <form action="{% url 'deletedata' Student.pk %}" method="post" class="d-inline"> {%csrf_token%}
+                                <input type="submit" value="Delete" class="btn btn-primary btn-sm">
+                            </form>
+                        </td>
+                        {%endif%}
+                    </tr>
+                    
+                </tbody>
+            </table>
+    {% endfor %}
+</div>
+
+{% endblock %}

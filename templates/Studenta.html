@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+{% block body%} 
+        <h4 class="text-center">Student Academics</h4>
+            {%if all_academics%}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Roll No.</th>
+                        <th scope="col">Maths</th>
+                        <th scope="col">Chemistry</th>
+                        <th scope="col">Physics</th>
+                        <th scope="col">Biology</th>
+                        <th scope="col">English</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for st in all_academics%}
+                    <tr>
+                        <td>{{st.Roll_no}}</td>
+                        <td>{{st.Maths}}</td>
+                        <td>{{st.Chemistry}}</td>
+                        <td>{{st.Physics}}</td>
+                        <td>{{st.Biology}}</td>
+                        <td>{{st.English}}</td>
+                        {% if user.is_authenticated %}
+                        <td>
+                            <a href="{% url 'Student_Academics_update_data' st.pk %}" class="btn btn-primary btn-sm">Update</a>
+                        </td>
+                    
+                        {%endif%}
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+            {%endif%}
+{%endblock%}

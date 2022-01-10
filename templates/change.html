@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-5 offset-4">
+            <h4>Change Password</h4>
+            
+            <form action="change_password" method="post"> {%csrf_token%}
+                <label>Current Password</label>
+                <input type="password" class="form-control" name="cp">
+                <label>New Password</label>
+                <input type="password" class="form-control" name="np">
+                <label>Confirm New Password</label>
+                <input type="password" class="form-control" name="cnp">
+                <div class="form-group mt-2">
+                    <input type="submit" class="btn btn-primary" value="Change Password">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{%endblock%}

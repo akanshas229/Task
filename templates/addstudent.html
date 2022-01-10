@@ -1,0 +1,59 @@
+{% extends 'base.html'%}
+{% block body%}
+<div class="container mt-3">
+    <div class="row">
+        {% if user.is_authenticated %}
+        <div class="col-sm-3">
+            <h4 class="text-center">Add New Student</h4>
+            <form action="add_student" method="post">{%csrf_token%}
+                {{form.as_p}}
+                <input type="submit" class="btn btn-primary" value="Save">
+            </form>
+        </div>
+        <div class="col-sm-8 offset-1">
+            {%endif%}
+            <h4 class="text-center">Student List</h4>
+            {%if all_student%}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Roll No.</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Class</th>
+                        <th scope="col">School</th>
+                        <th scope="col">Mobile</th>
+                        <th scope="col">Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for st in all_student%}
+
+                    <tr>
+                        
+                        <td>{{st.Roll_no}}</td>
+                        <td><a href="student_acadmics">{{st.Name}}</a></td>
+                        <td>{{st.Class}}</td>
+                        <td>{{st.School}}</td>
+                        <td>{{st.Mobile}}</td>
+                        <td>{{st.Address}}</td>
+
+                        {% if user.is_authenticated %}
+                        <td>
+                            <a href="{% url 'updatedata' st.pk %}" class="btn btn-primary btn-sm">Update</a>
+                        </td>
+                        <td>
+                            <form action="{% url 'deletedata' st.pk %}" method="post" class="d-inline"> {%csrf_token%}
+                                <input type="submit" value="Delete" class="btn btn-primary btn-sm">
+                            </form>
+                        </td>
+                        {%endif%}
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+            {%endif%}
+        </div>
+        
+    </div>
+</div>
+{%endblock%}
